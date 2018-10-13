@@ -1,0 +1,2 @@
+# goget
+Experiments with GO
