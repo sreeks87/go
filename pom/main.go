@@ -25,7 +25,7 @@ import (
 )
 
 func main() {
-	client := analytics.New("GeBjTn1H6DEANiUBM1yseO70bHdPs30v")
+	client := analytics.New("")
 	defer client.Close()
 	name, _ := os.Hostname()
 	invocationId := rand.Intn(100)
