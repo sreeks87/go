@@ -19,6 +19,7 @@ import (
 	"math/rand"
 	"os"
 	"pom/cmd"
+	"pom/engine"
 
 	"gopkg.in/segmentio/analytics-go.v3"
 )
@@ -41,7 +42,6 @@ func main() {
 	// It should not do much logichere, abstract the logic to the server.
 
 	// gRPC code start
-	engine.start()
-
+	engine.Start()
 	cmd.Execute()
 }
