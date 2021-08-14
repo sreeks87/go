@@ -1,26 +1,23 @@
 syntax="proto3";
-option go_package = "./tasks_grpc";
+option go_package = "./";
 // protoc --proto_path=tasks_grpc --go_out=plugins=grpc:tasks_grpc tasks.proto
 service TaskHandler{
-    rpc AddTask (SingleTask) returns (TaskWithErrorResponse);
-    rpc FetchTask(TaskIDRequest) returns (stream TaskWithErrorResponse);
-    rpc StateUpdate(TaskIDRequest) returns (TaskWithErrorResponse);
-    rpc DeleteTask(TaskIDRequest) returns(TaskWithErrorResponse);
+    rpc AddTask (SingleTask) returns (SingleTask);
+    rpc FetchTask(TaskIDRequest) returns (ListTasks);
+    rpc StateUpdate(TaskIDRequest) returns (SingleTask);
+    rpc DeleteTask(TaskIDRequest) returns(SingleTask);
 }
 
 message TaskIDRequest{
     string id  =1;
 }
 
-message TaskWithErrorResponse{
-    string ID =1;
-    string Description =2;
-    string State=3;
-    string Error=4;
-}
-
 message SingleTask{
     string ID =1;
     string Description =2;
     string State=3;
+}
+
+message ListTasks{
+    repeated SingleTask Tasks=1;
 }

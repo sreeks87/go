@@ -71,77 +71,6 @@ func (x *TaskIDRequest) GetId() string {
 	return ""
 }
 
-type TaskWithErrorResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ID          string `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	Description string `protobuf:"bytes,2,opt,name=Description,proto3" json:"Description,omitempty"`
-	State       string `protobuf:"bytes,3,opt,name=State,proto3" json:"State,omitempty"`
-	Error       string `protobuf:"bytes,4,opt,name=Error,proto3" json:"Error,omitempty"`
-}
-
-func (x *TaskWithErrorResponse) Reset() {
-	*x = TaskWithErrorResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_tasks_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TaskWithErrorResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TaskWithErrorResponse) ProtoMessage() {}
-
-func (x *TaskWithErrorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tasks_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TaskWithErrorResponse.ProtoReflect.Descriptor instead.
-func (*TaskWithErrorResponse) Descriptor() ([]byte, []int) {
-	return file_tasks_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *TaskWithErrorResponse) GetID() string {
-	if x != nil {
-		return x.ID
-	}
-	return ""
-}
-
-func (x *TaskWithErrorResponse) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *TaskWithErrorResponse) GetState() string {
-	if x != nil {
-		return x.State
-	}
-	return ""
-}
-
-func (x *TaskWithErrorResponse) GetError() string {
-	if x != nil {
-		return x.Error
-	}
-	return ""
-}
-
 type SingleTask struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -155,7 +84,7 @@ type SingleTask struct {
 func (x *SingleTask) Reset() {
 	*x = SingleTask{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_tasks_proto_msgTypes[2]
+		mi := &file_tasks_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -168,7 +97,7 @@ func (x *SingleTask) String() string {
 func (*SingleTask) ProtoMessage() {}
 
 func (x *SingleTask) ProtoReflect() protoreflect.Message {
-	mi := &file_tasks_proto_msgTypes[2]
+	mi := &file_tasks_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -181,7 +110,7 @@ func (x *SingleTask) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SingleTask.ProtoReflect.Descriptor instead.
 func (*SingleTask) Descriptor() ([]byte, []int) {
-	return file_tasks_proto_rawDescGZIP(), []int{2}
+	return file_tasks_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SingleTask) GetID() string {
@@ -205,40 +134,80 @@ func (x *SingleTask) GetState() string {
 	return ""
 }
 
+type ListTasks struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Tasks []*SingleTask `protobuf:"bytes,1,rep,name=Tasks,proto3" json:"Tasks,omitempty"`
+}
+
+func (x *ListTasks) Reset() {
+	*x = ListTasks{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tasks_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTasks) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTasks) ProtoMessage() {}
+
+func (x *ListTasks) ProtoReflect() protoreflect.Message {
+	mi := &file_tasks_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTasks.ProtoReflect.Descriptor instead.
+func (*ListTasks) Descriptor() ([]byte, []int) {
+	return file_tasks_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListTasks) GetTasks() []*SingleTask {
+	if x != nil {
+		return x.Tasks
+	}
+	return nil
+}
+
 var File_tasks_proto protoreflect.FileDescriptor
 
 var file_tasks_proto_rawDesc = []byte{
 	0x0a, 0x0b, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x1f, 0x0a,
 	0x0d, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x75,
-	0x0a, 0x15, 0x54, 0x61, 0x73, 0x6b, 0x57, 0x69, 0x74, 0x68, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x44, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x53, 0x74, 0x61,
-	0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12,
-	0x14, 0x0a, 0x05, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x45, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x54, 0x0a, 0x0a, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54,
-	0x61, 0x73, 0x6b, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x02, 0x49, 0x44, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
-	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x32, 0xe1, 0x01, 0x0a, 0x0b,
-	0x54, 0x61, 0x73, 0x6b, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x72, 0x12, 0x2e, 0x0a, 0x07, 0x41,
-	0x64, 0x64, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0b, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54,
-	0x61, 0x73, 0x6b, 0x1a, 0x16, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x57, 0x69, 0x74, 0x68, 0x45, 0x72,
-	0x72, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x09, 0x46,
-	0x65, 0x74, 0x63, 0x68, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0e, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x49,
-	0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x57,
-	0x69, 0x74, 0x68, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x30, 0x01, 0x12, 0x35, 0x0a, 0x0b, 0x53, 0x74, 0x61, 0x74, 0x65, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x54,
+	0x0a, 0x0a, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0e, 0x0a, 0x02,
+	0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x44, 0x12, 0x20, 0x0a, 0x0b,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14,
+	0x0a, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x22, 0x2e, 0x0a, 0x09, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x61, 0x73, 0x6b,
+	0x73, 0x12, 0x21, 0x0a, 0x05, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x0b, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x05, 0x54,
+	0x61, 0x73, 0x6b, 0x73, 0x32, 0xb2, 0x01, 0x0a, 0x0b, 0x54, 0x61, 0x73, 0x6b, 0x48, 0x61, 0x6e,
+	0x64, 0x6c, 0x65, 0x72, 0x12, 0x23, 0x0a, 0x07, 0x41, 0x64, 0x64, 0x54, 0x61, 0x73, 0x6b, 0x12,
+	0x0b, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x1a, 0x0b, 0x2e, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x27, 0x0a, 0x09, 0x46, 0x65, 0x74,
+	0x63, 0x68, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0e, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x61, 0x73,
+	0x6b, 0x73, 0x12, 0x2a, 0x0a, 0x0b, 0x53, 0x74, 0x61, 0x74, 0x65, 0x55, 0x70, 0x64, 0x61, 0x74,
 	0x65, 0x12, 0x0e, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x16, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x57, 0x69, 0x74, 0x68, 0x45, 0x72, 0x72, 0x6f,
-	0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x0a, 0x44, 0x65, 0x6c,
-	0x65, 0x74, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0e, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x57, 0x69,
-	0x74, 0x68, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42,
-	0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x1a, 0x0b, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x29,
+	0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x0e, 0x2e, 0x54,
+	0x61, 0x73, 0x6b, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0b, 0x2e, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -255,24 +224,25 @@ func file_tasks_proto_rawDescGZIP() []byte {
 
 var file_tasks_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_tasks_proto_goTypes = []interface{}{
-	(*TaskIDRequest)(nil),         // 0: TaskIDRequest
-	(*TaskWithErrorResponse)(nil), // 1: TaskWithErrorResponse
-	(*SingleTask)(nil),            // 2: SingleTask
+	(*TaskIDRequest)(nil), // 0: TaskIDRequest
+	(*SingleTask)(nil),    // 1: SingleTask
+	(*ListTasks)(nil),     // 2: ListTasks
 }
 var file_tasks_proto_depIdxs = []int32{
-	2, // 0: TaskHandler.AddTask:input_type -> SingleTask
-	0, // 1: TaskHandler.FetchTask:input_type -> TaskIDRequest
-	0, // 2: TaskHandler.StateUpdate:input_type -> TaskIDRequest
-	0, // 3: TaskHandler.DeleteTask:input_type -> TaskIDRequest
-	1, // 4: TaskHandler.AddTask:output_type -> TaskWithErrorResponse
-	1, // 5: TaskHandler.FetchTask:output_type -> TaskWithErrorResponse
-	1, // 6: TaskHandler.StateUpdate:output_type -> TaskWithErrorResponse
-	1, // 7: TaskHandler.DeleteTask:output_type -> TaskWithErrorResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: ListTasks.Tasks:type_name -> SingleTask
+	1, // 1: TaskHandler.AddTask:input_type -> SingleTask
+	0, // 2: TaskHandler.FetchTask:input_type -> TaskIDRequest
+	0, // 3: TaskHandler.StateUpdate:input_type -> TaskIDRequest
+	0, // 4: TaskHandler.DeleteTask:input_type -> TaskIDRequest
+	1, // 5: TaskHandler.AddTask:output_type -> SingleTask
+	2, // 6: TaskHandler.FetchTask:output_type -> ListTasks
+	1, // 7: TaskHandler.StateUpdate:output_type -> SingleTask
+	1, // 8: TaskHandler.DeleteTask:output_type -> SingleTask
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_tasks_proto_init() }
@@ -294,7 +264,7 @@ func file_tasks_proto_init() {
 			}
 		}
 		file_tasks_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TaskWithErrorResponse); i {
+			switch v := v.(*SingleTask); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -306,7 +276,7 @@ func file_tasks_proto_init() {
 			}
 		}
 		file_tasks_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SingleTask); i {
+			switch v := v.(*ListTasks); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -350,10 +320,10 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TaskHandlerClient interface {
-	AddTask(ctx context.Context, in *SingleTask, opts ...grpc.CallOption) (*TaskWithErrorResponse, error)
-	FetchTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (TaskHandler_FetchTaskClient, error)
-	StateUpdate(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*TaskWithErrorResponse, error)
-	DeleteTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*TaskWithErrorResponse, error)
+	AddTask(ctx context.Context, in *SingleTask, opts ...grpc.CallOption) (*SingleTask, error)
+	FetchTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*ListTasks, error)
+	StateUpdate(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*SingleTask, error)
+	DeleteTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*SingleTask, error)
 }
 
 type taskHandlerClient struct {
@@ -364,8 +334,8 @@ func NewTaskHandlerClient(cc grpc.ClientConnInterface) TaskHandlerClient {
 	return &taskHandlerClient{cc}
 }
 
-func (c *taskHandlerClient) AddTask(ctx context.Context, in *SingleTask, opts ...grpc.CallOption) (*TaskWithErrorResponse, error) {
-	out := new(TaskWithErrorResponse)
+func (c *taskHandlerClient) AddTask(ctx context.Context, in *SingleTask, opts ...grpc.CallOption) (*SingleTask, error) {
+	out := new(SingleTask)
 	err := c.cc.Invoke(ctx, "/TaskHandler/AddTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -373,40 +343,17 @@ func (c *taskHandlerClient) AddTask(ctx context.Context, in *SingleTask, opts ..
 	return out, nil
 }
 
-func (c *taskHandlerClient) FetchTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (TaskHandler_FetchTaskClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_TaskHandler_serviceDesc.Streams[0], "/TaskHandler/FetchTask", opts...)
+func (c *taskHandlerClient) FetchTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*ListTasks, error) {
+	out := new(ListTasks)
+	err := c.cc.Invoke(ctx, "/TaskHandler/FetchTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &taskHandlerFetchTaskClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	return out, nil
 }
 
-type TaskHandler_FetchTaskClient interface {
-	Recv() (*TaskWithErrorResponse, error)
-	grpc.ClientStream
-}
-
-type taskHandlerFetchTaskClient struct {
-	grpc.ClientStream
-}
-
-func (x *taskHandlerFetchTaskClient) Recv() (*TaskWithErrorResponse, error) {
-	m := new(TaskWithErrorResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *taskHandlerClient) StateUpdate(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*TaskWithErrorResponse, error) {
-	out := new(TaskWithErrorResponse)
+func (c *taskHandlerClient) StateUpdate(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*SingleTask, error) {
+	out := new(SingleTask)
 	err := c.cc.Invoke(ctx, "/TaskHandler/StateUpdate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -414,8 +361,8 @@ func (c *taskHandlerClient) StateUpdate(ctx context.Context, in *TaskIDRequest, 
 	return out, nil
 }
 
-func (c *taskHandlerClient) DeleteTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*TaskWithErrorResponse, error) {
-	out := new(TaskWithErrorResponse)
+func (c *taskHandlerClient) DeleteTask(ctx context.Context, in *TaskIDRequest, opts ...grpc.CallOption) (*SingleTask, error) {
+	out := new(SingleTask)
 	err := c.cc.Invoke(ctx, "/TaskHandler/DeleteTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -425,26 +372,26 @@ func (c *taskHandlerClient) DeleteTask(ctx context.Context, in *TaskIDRequest, o
 
 // TaskHandlerServer is the server API for TaskHandler service.
 type TaskHandlerServer interface {
-	AddTask(context.Context, *SingleTask) (*TaskWithErrorResponse, error)
-	FetchTask(*TaskIDRequest, TaskHandler_FetchTaskServer) error
-	StateUpdate(context.Context, *TaskIDRequest) (*TaskWithErrorResponse, error)
-	DeleteTask(context.Context, *TaskIDRequest) (*TaskWithErrorResponse, error)
+	AddTask(context.Context, *SingleTask) (*SingleTask, error)
+	FetchTask(context.Context, *TaskIDRequest) (*ListTasks, error)
+	StateUpdate(context.Context, *TaskIDRequest) (*SingleTask, error)
+	DeleteTask(context.Context, *TaskIDRequest) (*SingleTask, error)
 }
 
 // UnimplementedTaskHandlerServer can be embedded to have forward compatible implementations.
 type UnimplementedTaskHandlerServer struct {
 }
 
-func (*UnimplementedTaskHandlerServer) AddTask(context.Context, *SingleTask) (*TaskWithErrorResponse, error) {
+func (*UnimplementedTaskHandlerServer) AddTask(context.Context, *SingleTask) (*SingleTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTask not implemented")
 }
-func (*UnimplementedTaskHandlerServer) FetchTask(*TaskIDRequest, TaskHandler_FetchTaskServer) error {
-	return status.Errorf(codes.Unimplemented, "method FetchTask not implemented")
+func (*UnimplementedTaskHandlerServer) FetchTask(context.Context, *TaskIDRequest) (*ListTasks, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchTask not implemented")
 }
-func (*UnimplementedTaskHandlerServer) StateUpdate(context.Context, *TaskIDRequest) (*TaskWithErrorResponse, error) {
+func (*UnimplementedTaskHandlerServer) StateUpdate(context.Context, *TaskIDRequest) (*SingleTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StateUpdate not implemented")
 }
-func (*UnimplementedTaskHandlerServer) DeleteTask(context.Context, *TaskIDRequest) (*TaskWithErrorResponse, error) {
+func (*UnimplementedTaskHandlerServer) DeleteTask(context.Context, *TaskIDRequest) (*SingleTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
 
@@ -470,25 +417,22 @@ func _TaskHandler_AddTask_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaskHandler_FetchTask_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(TaskIDRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _TaskHandler_FetchTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(TaskHandlerServer).FetchTask(m, &taskHandlerFetchTaskServer{stream})
-}
-
-type TaskHandler_FetchTaskServer interface {
-	Send(*TaskWithErrorResponse) error
-	grpc.ServerStream
-}
-
-type taskHandlerFetchTaskServer struct {
-	grpc.ServerStream
-}
-
-func (x *taskHandlerFetchTaskServer) Send(m *TaskWithErrorResponse) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(TaskHandlerServer).FetchTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/TaskHandler/FetchTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskHandlerServer).FetchTask(ctx, req.(*TaskIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _TaskHandler_StateUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -536,6 +480,10 @@ var _TaskHandler_serviceDesc = grpc.ServiceDesc{
 			Handler:    _TaskHandler_AddTask_Handler,
 		},
 		{
+			MethodName: "FetchTask",
+			Handler:    _TaskHandler_FetchTask_Handler,
+		},
+		{
 			MethodName: "StateUpdate",
 			Handler:    _TaskHandler_StateUpdate_Handler,
 		},
@@ -544,12 +492,6 @@ var _TaskHandler_serviceDesc = grpc.ServiceDesc{
 			Handler:    _TaskHandler_DeleteTask_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "FetchTask",
-			Handler:       _TaskHandler_FetchTask_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "tasks.proto",
 }

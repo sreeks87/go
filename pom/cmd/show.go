@@ -24,9 +24,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
+// showCmd represents the show command
+var showCmd = &cobra.Command{
+	Use:   "show",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -44,28 +44,26 @@ to quickly create a Cobra application.`,
 
 		c := tasks_grpc.NewTaskHandlerClient(conn)
 
-		desc, _ := cmd.Flags().GetString("desc")
-		// response, err := c.(context.Background(), &chat.Message{Body: "Hello From Client!"})
-		response, err := c.AddTask(context.Background(), &tasks_grpc.SingleTask{
-			ID:          "0",
-			Description: desc,
-			State:       "Active",
-		})
-		ShowResponse(response, err)
+		id, _ := cmd.Flags().GetString("id")
+		if id == "" {
+			id = "all"
+		}
+		response, err := c.FetchTask(context.Background(), &tasks_grpc.TaskIDRequest{Id: id})
+
+		DisplayOnConsole(response)
 	},
 }
 
 func init() {
-	taskCmd.AddCommand(addCmd)
+	taskCmd.AddCommand(showCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	addCmd.PersistentFlags().StringP("desc", "d", "", "Description of the task.")
-	addCmd.MarkPersistentFlagRequired("desc")
+	showCmd.PersistentFlags().StringP("id", "i", "", "ID of the task you want to view")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("desc", "d", false, "Description of the task.")
+	// showCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

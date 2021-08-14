@@ -41,18 +41,36 @@ func (s *server) transformGRPCToTask(t *tasks_grpc.SingleTask) *domain.Task {
 	return task
 }
 
-func (s *server) AddTask(c context.Context, in *tasks_grpc.SingleTask) (*tasks_grpc.TaskWithErrorResponse, error) {
+func (s *server) AddTask(c context.Context, in *tasks_grpc.SingleTask) (*tasks_grpc.SingleTask, error) {
 	task := s.transformGRPCToTask(in)
 	s.taskService.Add(task)
-	return nil, nil
-}
-func (s *server) FetchTask(in *tasks_grpc.TaskIDRequest, stream tasks_grpc.TaskHandler_FetchTaskServer) error {
-	return nil
+	return in, nil
 }
 
-func (s *server) StateUpdate(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.TaskWithErrorResponse, error) {
+func (s *server) FetchTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.ListTasks, error) {
+	var tasks []*domain.Task
+	if in.Id == "all" {
+		tasks, _ = s.taskService.ShowTasks(nil)
+	} else {
+		tasks, _ = s.taskService.ShowTasks(in.Id)
+	}
+	responseArray := make([]*tasks_grpc.SingleTask, len(tasks))
+	for i, task := range tasks {
+		responseArray[i] = s.transformTaskToGRPC(task)
+	}
+	result := &tasks_grpc.ListTasks{
+		Tasks: responseArray,
+	}
+	return result, nil
+}
+
+func (s *server) StateUpdate(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.SingleTask, error) {
 	return nil, nil
 }
-func (s *server) DeleteTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.TaskWithErrorResponse, error) {
-	return nil, nil
+
+func (s *server) DeleteTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.SingleTask, error) {
+	t, _ := s.taskService.ShowTasks(in.Id)
+	s.taskService.DeleteTask(in.Id)
+	// todo: Dont do this, to be removed
+	return s.transformTaskToGRPC(t[0]), nil
 }

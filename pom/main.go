@@ -16,32 +16,28 @@ limitations under the License.
 package main
 
 import (
-	"math/rand"
-	"os"
 	"pom/cmd"
 	"pom/engine"
-
-	"gopkg.in/segmentio/analytics-go.v3"
 )
 
 func main() {
-	client := analytics.New("")
-	defer client.Close()
-	name, _ := os.Hostname()
-	invocationId := rand.Intn(100)
-	user := "testuser"
-	client.Enqueue(analytics.Identify{
-		UserId: user,
-		Traits: analytics.NewTraits().
-			SetName(name).
-			Set("invocationID", invocationId).
-			Set("friends", 42),
-	})
+	// client := analytics.New("")
+	// defer client.Close()
+	// name, _ := os.Hostname()
+	// invocationId := rand.Intn(100)
+	// user := "testuser"
+	// client.Enqueue(analytics.Identify{
+	// 	UserId: user,
+	// 	Traits: analytics.NewTraits().
+	// 		SetName(name).
+	// 		Set("invocationID", invocationId).
+	// 		Set("friends", 42),
+	// })
 	// Code to run the gRPC server
 	// This code here should be as slim as possible
 	// It should not do much logichere, abstract the logic to the server.
 
 	// gRPC code start
-	engine.Start()
+	go engine.Start()
 	cmd.Execute()
 }

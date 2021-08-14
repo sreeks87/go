@@ -16,17 +16,14 @@ limitations under the License.
 package cmd
 
 import (
-	"context"
-	"log"
-	"pom/engine/task/controller/grpc/tasks_grpc"
+	"fmt"
 
 	"github.com/spf13/cobra"
-	"google.golang.org/grpc"
 )
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
+// updateCmd represents the update command
+var updateCmd = &cobra.Command{
+	Use:   "update",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -35,37 +32,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var conn *grpc.ClientConn
-		conn, err := grpc.Dial(":5001", grpc.WithInsecure())
-		if err != nil {
-			log.Fatalf("did not connect: %s", err)
-		}
-		defer conn.Close()
-
-		c := tasks_grpc.NewTaskHandlerClient(conn)
-
-		desc, _ := cmd.Flags().GetString("desc")
-		// response, err := c.(context.Background(), &chat.Message{Body: "Hello From Client!"})
-		response, err := c.AddTask(context.Background(), &tasks_grpc.SingleTask{
-			ID:          "0",
-			Description: desc,
-			State:       "Active",
-		})
-		ShowResponse(response, err)
+		fmt.Println("update called")
 	},
 }
 
 func init() {
-	taskCmd.AddCommand(addCmd)
+	taskCmd.AddCommand(updateCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	addCmd.PersistentFlags().StringP("desc", "d", "", "Description of the task.")
-	addCmd.MarkPersistentFlagRequired("desc")
+	// updateCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("desc", "d", false, "Description of the task.")
+	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
