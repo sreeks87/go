@@ -21,6 +21,7 @@ func NewTaskServiceGRPC(gserver *grpc.Server, svc domain.ITaskService) {
 }
 
 func (s *server) transformTaskToGRPC(t *domain.Task) *tasks_grpc.SingleTask {
+	s.taskService.Log(s.taskService.GetUser(), "Transforming task data to GRPC data")
 	if t == nil {
 		return nil
 	}
@@ -33,6 +34,7 @@ func (s *server) transformTaskToGRPC(t *domain.Task) *tasks_grpc.SingleTask {
 }
 
 func (s *server) transformGRPCToTask(t *tasks_grpc.SingleTask) *domain.Task {
+	s.taskService.Log(s.taskService.GetUser(), "Transforming GRPC data to task data")
 	task := &domain.Task{
 		ID:          t.ID,
 		Description: t.Description,
@@ -42,12 +44,14 @@ func (s *server) transformGRPCToTask(t *tasks_grpc.SingleTask) *domain.Task {
 }
 
 func (s *server) AddTask(c context.Context, in *tasks_grpc.SingleTask) (*tasks_grpc.SingleTask, error) {
+	s.taskService.Log(s.taskService.GetUser(), "Add task controller")
 	task := s.transformGRPCToTask(in)
-	s.taskService.Add(task)
-	return in, nil
+	t, e := s.taskService.Add(task)
+	return s.transformTaskToGRPC(t), e
 }
 
 func (s *server) FetchTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.ListTasks, error) {
+	s.taskService.Log(s.taskService.GetUser(), "Fetch task controller")
 	var tasks []*domain.Task
 	if in.Id == "all" {
 		tasks, _ = s.taskService.ShowTasks(nil)
@@ -65,10 +69,12 @@ func (s *server) FetchTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*ta
 }
 
 func (s *server) StateUpdate(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.SingleTask, error) {
+	s.taskService.Log(s.taskService.GetUser(), "StateUpdate task controller")
 	return nil, nil
 }
 
 func (s *server) DeleteTask(c context.Context, in *tasks_grpc.TaskIDRequest) (*tasks_grpc.SingleTask, error) {
+	s.taskService.Log(s.taskService.GetUser(), "Delete task controller")
 	t, _ := s.taskService.ShowTasks(in.Id)
 	s.taskService.DeleteTask(in.Id)
 	// todo: Dont do this, to be removed

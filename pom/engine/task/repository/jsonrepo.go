@@ -2,6 +2,7 @@ package repository
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"os"
 	"pom/engine/domain"
 	"regexp"
@@ -32,7 +33,7 @@ func (j *jsonRepo) Get(id string) (*domain.Task, error) {
 	}
 	return &task, nil
 }
-func (j *jsonRepo) Insert(task *domain.Task) error {
+func (j *jsonRepo) Insert2(task *domain.Task) error {
 	js := new(jsonstore.JSONStore)
 	m, _ := j.GetMaxID()
 	m += 1
@@ -62,32 +63,38 @@ func (j *jsonRepo) Delete(taskId string) error {
 	return nil
 }
 
-func (j *jsonRepo) Update(task *domain.Task) error {
+func (j *jsonRepo) Update(task *domain.Task) (*domain.Task, error) {
 	existingTask, err := j.Get(task.ID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	existingTask.ID = task.ID
 	existingTask.Description = task.Description
 	existingTask.State = task.State
-	if err := j.Insert(existingTask); err != nil {
-		return err
+	tsk, err := j.Insert(existingTask)
+	if err != nil {
+		return nil, err
 	}
-	return nil
+	return tsk, nil
 }
 
 func (j *jsonRepo) GetAll() ([]*domain.Task, error) {
+	if !j.RepoExists() {
+		nullArray := make([]*domain.Task, 0)
+		return nullArray, nil
+	}
 	js, err := jsonstore.Open(j.Path)
 	if err != nil {
 		return nil, err
 	}
-	var task domain.Task
+
 	var tasks []*domain.Task
 	re := regexp.MustCompile("[0-9]+")
 	allTasks := js.GetAll(re)
 	for _, v := range allTasks {
+		var task *domain.Task
 		_ = json.Unmarshal(v, &task)
-		tasks = append(tasks, &task)
+		tasks = append(tasks, task)
 	}
 	return tasks, nil
 }
@@ -115,4 +122,27 @@ func (j *jsonRepo) RepoExists() bool {
 		}
 	}
 	return true
+}
+
+func (j *jsonRepo) Insert(task *domain.Task) (*domain.Task, error) {
+	// js := new(jsonstore.JSONStore)
+	m, _ := j.GetMaxID()
+	tasks, e := j.GetAll()
+	if e != nil {
+		panic(e)
+	}
+	m += 1
+	task.ID = strconv.Itoa(m)
+	tasks = append(tasks, task)
+	// file write here
+	fileData := make(map[string]string)
+	for _, v := range tasks {
+		str, _ := json.Marshal(v)
+		fileData[v.ID] = string(str)
+	}
+	fileData["maxid"] = strconv.Itoa(m)
+	file, _ := json.MarshalIndent(fileData, "", " ")
+	_ = ioutil.WriteFile(j.Path, file, 0644)
+	// read the written file and update the maxid
+	return task, nil
 }

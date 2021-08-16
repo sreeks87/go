@@ -16,8 +16,10 @@ limitations under the License.
 package cmd
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/gen2brain/beeep"
 	"github.com/spf13/cobra"
 )
 
@@ -33,14 +35,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		id, _ := cmd.Flags().GetString("id")
-
-		var bar Bar
-		bar.NewOption(0, 100)
-		for i := 0; i <= 100; i++ {
-			time.Sleep(100 * time.Millisecond)
-			bar.Play(int64(i))
-		}
-		bar.Finish()
+		taskLimit, breakLimit, bigBreakLimit := getRunConfig()
+		RunTaskinLoop(id, taskLimit, breakLimit, bigBreakLimit)
 	},
 }
 
@@ -58,4 +54,45 @@ func init() {
 	// runCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	runCmd.PersistentFlags().StringP("id", "i", "", "ID of the task you want to run")
 	runCmd.MarkPersistentFlagRequired("id")
+}
+
+func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit int64) {
+
+	// todo a pause feature to pause the running task.
+	// todo use ui-contols libraries to make it look better.
+	// https://github.com/avelino/awesome-go#advanced-console-uis
+	for {
+		fmt.Println("Press Ctrl C to quit.")
+		var barTask Bar
+		barTask.NewOption(0, taskLimit)
+		fmt.Println("Executing task :", id)
+		Loop(taskLimit, barTask)
+		barTask.Finish()
+		beep()
+		var barBreak Bar
+		barBreak.NewOption(0, breakLimit)
+		fmt.Println("Break time :) ")
+		Loop(breakLimit, barBreak)
+		barBreak.Finish()
+		beep()
+	}
+}
+
+func Loop(stop int64, bar Bar) {
+	for i := 0; int64(i) <= stop; i++ {
+		time.Sleep(100 * time.Millisecond)
+		bar.Play(int64(i))
+	}
+}
+
+func getRunConfig() (int64, int64, int64) {
+	// todo read these from the config
+	return 100, 100, 20
+}
+
+func beep() {
+	err := beeep.Beep(beeep.DefaultFreq, beeep.DefaultDuration)
+	if err != nil {
+		panic(err)
+	}
 }
