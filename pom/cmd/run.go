@@ -16,11 +16,15 @@ limitations under the License.
 package cmd
 
 import (
+	"context"
 	"fmt"
+	"log"
+	"pom/engine/task/controller/grpc/tasks_grpc"
 	"time"
 
 	"github.com/gen2brain/beeep"
 	"github.com/spf13/cobra"
+	"google.golang.org/grpc"
 )
 
 // runCmd represents the run command
@@ -57,7 +61,16 @@ func init() {
 }
 
 func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit int64) {
+	var conn *grpc.ClientConn
+	conn, err := grpc.Dial(":5001", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %s", err)
+	}
+	defer conn.Close()
 
+	c := tasks_grpc.NewTaskHandlerClient(conn)
+	response, _ := c.FetchTask(context.Background(), &tasks_grpc.TaskIDRequest{Id: id})
+	desc := response.Tasks[0].Description
 	// todo a pause feature to pause the running task.
 	// todo use ui-contols libraries to make it look better.
 	// https://github.com/avelino/awesome-go#advanced-console-uis
@@ -65,11 +78,13 @@ func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit i
 	for {
 		fmt.Println("Press Ctrl C to quit.")
 		var barTask Bar
+		count += 1
 		barTask.NewOption(0, taskLimit)
-		fmt.Println("Executing task :", id)
+
+		fmt.Println("Executing task : '", desc, "'. Instance :", count)
 		Loop(taskLimit, barTask)
 		barTask.Finish()
-		count += 1
+
 		beep()
 		var barBreak Bar
 		breakMsg := "Break time :) "
