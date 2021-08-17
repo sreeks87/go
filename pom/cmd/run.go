@@ -61,6 +61,7 @@ func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit i
 	// todo a pause feature to pause the running task.
 	// todo use ui-contols libraries to make it look better.
 	// https://github.com/avelino/awesome-go#advanced-console-uis
+	count := 0
 	for {
 		fmt.Println("Press Ctrl C to quit.")
 		var barTask Bar
@@ -68,10 +69,17 @@ func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit i
 		fmt.Println("Executing task :", id)
 		Loop(taskLimit, barTask)
 		barTask.Finish()
+		count += 1
 		beep()
 		var barBreak Bar
+		breakMsg := "Break time :) "
+		if count == 4 {
+			breakLimit = bigBreakLimit
+			breakMsg = "Take a long break.You deserve it!!!"
+		}
 		barBreak.NewOption(0, breakLimit)
-		fmt.Println("Break time :) ")
+		fmt.Println(breakMsg)
+
 		Loop(breakLimit, barBreak)
 		barBreak.Finish()
 		beep()
@@ -80,14 +88,14 @@ func RunTaskinLoop(id string, taskLimit int64, breakLimit int64, bigBreakLimit i
 
 func Loop(stop int64, bar Bar) {
 	for i := 0; int64(i) <= stop; i++ {
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(1 * time.Second)
 		bar.Play(int64(i))
 	}
 }
 
 func getRunConfig() (int64, int64, int64) {
 	// todo read these from the config
-	return 100, 100, 20
+	return 25 * 60, 5 * 60, 20 * 60
 }
 
 func beep() {
