@@ -1,0 +1,8 @@
+run-test_windows_amd64_1.exe
+.vscode/launch.json
+validator.json
+test.txt
+test.py
+vendor
+*.exe
+run-*
