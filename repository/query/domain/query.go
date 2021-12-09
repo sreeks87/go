@@ -29,4 +29,5 @@ type Downstream interface {
 
 type DB interface {
 	GetStat() (*StatResponse, error)
+	UpdateStat(string) error
 }

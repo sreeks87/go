@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/sreeks87/repository/query/domain"
 )
 
@@ -17,14 +19,12 @@ func NewRepoSvc(db domain.DB, ds domain.Downstream) domain.Service {
 }
 
 func (svc *RepoSvc) Fetch(param string) (*domain.Response, error) {
-
-	return nil, nil
+	if e := svc.Database.UpdateStat(param); e != nil {
+		return nil, errors.New("update failed")
+	}
+	return svc.DS.Get(param)
 }
 
 func (svc *RepoSvc) Stat() (*domain.StatResponse, error) {
 	return svc.Database.GetStat()
-}
-
-func (svc *RepoSvc) Call(param string) {
-	svc.DS.Get(param)
 }
